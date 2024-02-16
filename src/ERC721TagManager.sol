@@ -7,6 +7,9 @@ import {AccessControl} from "../lib/openzeppelin-contracts/contracts/access/Acce
 import {ITagManagerExtended, ITagManager} from "./ITagManagerExtended.sol";
 
 contract ERC721TagManager is AccessControl, ITagManagerExtended {
+    event TagAdded(uint256 tokenId, bytes32 tag);
+    event TagRemoved(uint256 tokenId, bytes32 tag);
+
     error AlreadyTagged(uint256 tokenId, bytes32 tag);
     error NotTagged(uint256 tokenId, bytes32 tag);
 
@@ -91,6 +94,7 @@ contract ERC721TagManager is AccessControl, ITagManagerExtended {
 
         tagData.hasTag[tokenId] = true;
         ++tagData.taggedAccountsCount; // TokenID can only have 1 owner / account
+        emit TagAdded(tokenId, tag);
     }
 
     function _removeTag(uint256 tokenId, bytes32 tag) internal {
@@ -101,5 +105,6 @@ contract ERC721TagManager is AccessControl, ITagManagerExtended {
 
         tagData.hasTag[tokenId] = false;
         --tagData.taggedAccountsCount;
+        emit TagRemoved(tokenId, tag);
     }
 }
