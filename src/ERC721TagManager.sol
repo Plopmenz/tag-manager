@@ -48,8 +48,9 @@ contract ERC721TagManager is AccessControl, ITagManagerExtended {
         _addTag(tokenId, tag);
 
         // First of your NFTs to get an tag is set as your default (for convenience)
+        // Exception: if the tokenId is 0, then any other tokens the account hold getting tags will overwrite it
         address tokenOwner = collection.ownerOf(tokenId);
-        if (accountToId[tokenOwner] != 0) {
+        if (accountToId[tokenOwner] == 0) {
             accountToId[tokenOwner] = tokenId;
         }
     }
@@ -82,8 +83,14 @@ contract ERC721TagManager is AccessControl, ITagManagerExtended {
     /// @param adminRole The new admin role of this role.
     /// @dev Only callable by a holder of the (old) admin role.
     /// @dev This can be used by a default admin to create a new tag (managed by another tag).
-    function setRoleAdmin(bytes32 role, bytes32 adminRole) public onlyRole(getRoleAdmin(role)) {
+    function setRoleAdmin(bytes32 role, bytes32 adminRole) external onlyRole(getRoleAdmin(role)) {
         _setRoleAdmin(role, adminRole);
+    }
+
+    /// @notice Sets the tokenId to use when checking for tags of the sender account.
+    /// @param tokenId The tokenId to use.
+    function setId(uint256 tokenId) external {
+        accountToId[msg.sender] = tokenId;
     }
 
     function _addTag(uint256 tokenId, bytes32 tag) internal {
