@@ -8,3 +8,6 @@
 	path = lib/openzeppelin-contracts
 	url = https://github.com/openzeppelin/openzeppelin-contracts
 	branch = release-v5.0
+[submodule "lib/ens-reverse-claimable"]
+	path = lib/ens-reverse-claimable
+	url = https://github.com/Plopmenz/ens-reverse-claimable

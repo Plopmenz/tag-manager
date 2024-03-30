@@ -3,10 +3,11 @@ pragma solidity ^0.8.0;
 
 import {IERC721} from "../lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
 import {AccessControl} from "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
+import {ENSReverseClaimable} from "../lib/ens-reverse-claimable/src/ENSReverseClaimable.sol";
 
 import {ITagManagerExtended, ITagManager} from "./ITagManagerExtended.sol";
 
-contract ERC721TagManager is AccessControl, ITagManagerExtended {
+contract ERC721TagManager is AccessControl, ENSReverseClaimable, ITagManagerExtended {
     event TagAdded(uint256 tokenId, bytes32 tag);
     event TagRemoved(uint256 tokenId, bytes32 tag);
 
