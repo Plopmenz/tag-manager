@@ -41,6 +41,13 @@ contract ERC721TagManager is AccessControl, ENSReverseClaimable, ITagManagerExte
         return tags[tag].taggedAccountsCount;
     }
 
+    /// @notice Checks if a token holds a certain tag.
+    /// @param tokenId The token to check with.
+    /// @param tag The tag to check for.
+    function tokenHasTag(uint256 tokenId, bytes32 tag) external view returns (bool) {
+        return tags[tag].hasTag[tokenId];
+    }
+
     /// @notice Adds a tag to a tokenId.
     /// @param tokenId The tokenId getting the tag.
     /// @param tag The tag to apply.
